@@ -3,4 +3,8 @@
     width: 100%;
     border: 2px solid #c5c5c5;
     border-radius: 5px;
+    overflow-Y: scroll;
 }
+/* .all-data::-webkit-scrollbar {
+    display: none;
+} */

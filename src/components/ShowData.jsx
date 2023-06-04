@@ -1,42 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import "./ShowData.css";
 
-function ShowData() {
+function ShowData({searchItem}){
 
-    const [column, setColumn] = useState([]);
     const [record, setRecord] = useState([]);
 
     useEffect(() => {
-        fetch("../data.json")
+        fetch("https://mocki.io/v1/589febc6-2981-4bfe-b1ae-ea5077a7e0da")
         .then((res) => {
             return res.json();
         }).then((data) => {
-            setColumn(Object.keys(data[0]));
             setRecord(data);
         });
-    }, [])
+    }, []);
     
     return (
         <>
             <div className="all-data">
-                <table>
+                <table className="table table-hover">
                     <thead>
                         <tr>
-                            {column.map((elm, index) => {
-                                return <th key={index}>{elm}</th>
-                            })}
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Gender</th>
+                            <th>Phone</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            record.map((elm, index) => {
+                            record.filter((item) => {
+                                return searchItem.toLowerCase() === '' ? item : item.Name.toLowerCase().includes(searchItem.toLowerCase());
+                            }).map((elm, index) => {
                                 return <tr key={index}>
-                                    <td>{elm.id}</td>
-                                    <td>{elm.first_name}</td>
-                                    <td>{elm.last_name}</td>
-                                    <td>{elm.email}</td>
-                                    <td>{elm.gender}</td>
-                                    <td>{elm.phone}</td>
+                                    <td>{elm.Id}</td>
+                                    <td>{elm.Name}</td>
+                                    <td>{elm.Email}</td>
+                                    <td>{elm.Gender}</td>
+                                    <td>{elm.Phone}</td>
                                 </tr>
                             })
                         }
